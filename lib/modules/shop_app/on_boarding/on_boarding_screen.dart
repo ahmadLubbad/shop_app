@@ -51,11 +51,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       appBar: AppBar(
         actions: [
           defaulteButton(
+            width: 70.0,
               function:(){navigateAndFinish(context, LoginScreen());}
               , text: 'SKIP',
           ),
         ],
-
+        title: Text('App bar'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
