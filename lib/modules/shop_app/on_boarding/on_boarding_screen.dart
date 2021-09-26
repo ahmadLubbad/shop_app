@@ -51,6 +51,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       appBar: AppBar(
         actions: [
           defaulteButton(
+            background: Colors.white,
             width: 70.0,
               function:(){navigateAndFinish(context, LoginScreen());}
               , text: 'SKIP',

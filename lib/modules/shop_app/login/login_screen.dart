@@ -7,9 +7,9 @@ import 'package:shop_app/modules/shop_app/login/cubit/states.dart';
 import 'package:shop_app/modules/shop_app/register/register_screen.dart';
 import 'package:shop_app/shared/componentes.dart';
 
-class LoginScreen extends StatelessWidget {
+var formKey =GlobalKey<FormState>();
 
-  var formKey =GlobalKey<FormState>();
+class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +66,22 @@ class LoginScreen extends StatelessWidget {
                         defaultFormField(
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
-                          suffix: Icons.visibility_outlined,
-                          suffixPressed: (){},
+                          suffix: ShopLoginCubit.get(context).suffix,
+                          onSubmit: (value)
+                          {
+                            if(formKey.currentState.validate())
+                            {
+                              ShopLoginCubit.get(context).userLogin(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                            }
+                          },
+                          isPassword: ShopLoginCubit.get(context).isPassword,
+                          suffixPressed: ()
+                          {
+                            ShopLoginCubit.get(context).changPasswordVisibility();
+                          },
                           validate: (String value){
                             if(value.isEmpty){
                               return 'Please enter your password';
