@@ -4,20 +4,21 @@ import 'package:flutter/cupertino.dart';
 class DioHelper{
   static Dio dio;
 
+
   static init(){
-    dio = Dio(
-      BaseOptions(
+    dio = Dio();
+    dio.options = BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
         headers:{
           'Content-Type':'application/json',
           'lang':'en',
         }
-      ),
     );
   }
 
   static Future<Response> getData({
+
     @required String url,
     @required Map<String,dynamic> query,
     String lang = 'ar',

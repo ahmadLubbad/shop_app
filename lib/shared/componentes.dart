@@ -41,12 +41,11 @@ Widget defaultFormField({
 
       decoration: InputDecoration(
         labelText: label,
-
         prefixIcon: Icon(prefix),
-
-        suffixIcon: suffix != null
-            ? IconButton(
-          onPressed: suffixPressed(),
+        suffixIcon: suffix != null ? IconButton(
+          onPressed:(){
+            suffixPressed();
+          } ,
           icon: Icon(suffix),
         )
             : null,

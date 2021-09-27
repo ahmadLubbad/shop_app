@@ -39,6 +39,7 @@ class ShopLoginCubit extends Cubit<LoginState>{
 
   void changPasswordVisibility()
   {
+    print('change passwordf');
     isPassword=!isPassword;
 
     suffix=isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
