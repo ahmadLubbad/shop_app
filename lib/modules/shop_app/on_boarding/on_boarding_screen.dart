@@ -25,19 +25,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boarding = [
     BoardingModel(
       image:
-          'https://is3-ssl.mzstatic.com/image/thumb/Purple124/v4/eb/27/3b/eb273b40-8e07-d407-9444-74b24fd401ba/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/600x600wa.png',
+          'images/on_boarding.jpg',
       title: 'On Board 1 Title',
       body: 'On Board 1 Body',
     ),
     BoardingModel(
       image:
-          'https://is3-ssl.mzstatic.com/image/thumb/Purple124/v4/eb/27/3b/eb273b40-8e07-d407-9444-74b24fd401ba/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/600x600wa.png',
+      'images/on_boarding.jpg',
       title: 'On Board 2 Title',
       body: 'On Board 2 Body',
     ),
     BoardingModel(
       image:
-          'https://is3-ssl.mzstatic.com/image/thumb/Purple124/v4/eb/27/3b/eb273b40-8e07-d407-9444-74b24fd401ba/AppIcon-0-0-1x_U007emarketing-0-0-0-10-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/600x600wa.png',
+      'images/on_boarding.jpg',
       title: 'On Board 3 Title',
       body: 'On Board 3 Body',
     ),
@@ -132,7 +132,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: (Image.network(
+            child: (Image.asset(
               '${model.image}',
             )),
           ),
