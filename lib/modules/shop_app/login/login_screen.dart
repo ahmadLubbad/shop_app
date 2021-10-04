@@ -27,6 +27,15 @@ class LoginScreen extends StatelessWidget {
             if(state.loginModel.status){
               print(state.loginModel.data.token);
               print(state.loginModel.message);
+              Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
             }else{
 
               print(state.loginModel.message);

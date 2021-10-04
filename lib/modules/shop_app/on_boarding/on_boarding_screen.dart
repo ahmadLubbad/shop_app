@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/shop_app/login/login_screen.dart';
+import 'package:shop_app/network/local/cache_helper.dart';
 import 'package:shop_app/shared/componentes.dart';
 import 'package:shop_app/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -45,6 +46,24 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   bool isLast = false;
 
+  void submit()
+  {
+    CacheHelper.saveData
+      (
+        key: 'onBoarding',
+        value: true,
+    ).then((value) {
+      if(value)
+      {
+        navigateAndFinish(
+          context,
+          LoginScreen(),
+        );
+      }
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +72,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           defaulteButton(
             background: Colors.white,
             width: 70.0,
-              function:(){navigateAndFinish(context, LoginScreen());}
-              , text: 'SKIP',
+              function:submit,
+              text: 'SKIP',
           ),
         ],
         title: Text('App bar'),
@@ -108,7 +127,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onPressed: () {
                     if(isLast==true)
                     {
-                      navigateAndFinish(context, LoginScreen());
+                      submit();
                     }else{
                       boardController.nextPage(
                         duration: Duration(
