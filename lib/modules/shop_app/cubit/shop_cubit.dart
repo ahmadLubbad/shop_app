@@ -6,7 +6,6 @@ import 'package:shop_app/modules/shop_app/categories/categories_screen.dart';
 import 'package:shop_app/modules/shop_app/cubit/state.dart';
 import 'package:shop_app/modules/shop_app/favorites/favorites_screen.dart';
 import 'package:shop_app/modules/shop_app/product/product_screen.dart';
-import 'package:shop_app/modules/shop_app/search/search_screen.dart';
 import 'package:shop_app/modules/shop_app/settings/setting_screen.dart';
 import 'package:shop_app/network/end_points.dart';
 import 'package:shop_app/network/remote/dio_helper.dart';
@@ -44,9 +43,13 @@ class ShopCubit extends Cubit<ShopStates>
       token: token,
     ).then((value)
     {
-      homeModel=HomeModel.fromJason(value.data);
 
+      var response = value.data;
+      print(response['data']['banners'][0]['image']);
+
+      homeModel=HomeModel.fromJason(value.data);
       printFullText(homeModel.data.banners[0].image);
+      printFullText(homeModel.data.banners.toString());
 
       emit(ShopSuccessHomeDataState());
     }).catchError((error)

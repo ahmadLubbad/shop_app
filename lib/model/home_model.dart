@@ -10,6 +10,8 @@ class HomeModel
   }
 }
 
+// response[data][banners][index][image];
+
 class HomeDataModel
 {
 
@@ -20,12 +22,12 @@ class HomeDataModel
   {
     json['banners'].forEach((element)
     {
-      banners.add(element);
+      banners.add(BannerModel.fromJason(element));
     });
 
     json['products'].forEach((element)
     {
-      products.add(element);
+      products.add(ProductModel.fromJason(element));
     });
   }
 
