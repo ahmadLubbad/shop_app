@@ -57,7 +57,7 @@ class ProductScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 1.0,
                 crossAxisSpacing: 1.0,
-                childAspectRatio: 1 / 1.4,
+                childAspectRatio: 1 / 1.6,
                 children: List.generate(model.data.products.length,
                     (index) => buildGridProduct(model.data.products[index])),
               ),
@@ -66,33 +66,83 @@ class ProductScreen extends StatelessWidget {
         ),
       );
 
-  Widget buildGridProduct(ProductModel model) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image(
-            image: NetworkImage(model.image),
-            width: double.infinity,
-            height: 200.0,
-            fit: BoxFit.cover,
-          ),
-          Text(
-            model.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 16.0,
-              height: 1.4,
+  Widget buildGridProduct(ProductModel model) => Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.bottomStart,
+              children: [
+                Image(
+                  image: NetworkImage(model.image),
+                  width: double.infinity,
+                  height: 200.0,
+                ),
+                if (model.discount != 0)
+                  Container(
+                    color: Colors.red,
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      'DISCOUNT',
+                      style: TextStyle(fontSize: 12.0, color: Colors.white),
+                    ),
+                  ),
+              ],
             ),
-          ),
-          Text(
-            '${model.price.round()}',
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 16.0,
-              color: defaultColor,
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      height: 1.4,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '${model.price.round()}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: defaultColor,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      if (model.discount != 0)
+                        Text(
+                          '${model.oldPrice.round()}',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.favorite_border,
+                          size: 14.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
 }
