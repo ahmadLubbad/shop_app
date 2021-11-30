@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/model/home_model.dart';
@@ -25,6 +26,7 @@ class ProductScreen extends StatelessWidget {
 
   Widget productBuilder(HomeModel model) => SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
               items: model.data.banners
@@ -45,6 +47,38 @@ class ProductScreen extends StatelessWidget {
                 autoPlay: true,
                 scrollDirection: Axis.horizontal,
               ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Text(
+                'Categories',
+              style: TextStyle(color: defaultColor),
+            ),
+            Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                Image(
+                    image: NetworkImage('https://student.valuxapps.com/storage/uploads/categories/16301438353uCFh.29118.jpg'),
+                    height: 100.0,
+                    width: 100.0,
+                    fit: BoxFit.cover,
+                ),
+                Container
+                  (
+                  color: Colors.black.withOpacity(.8),
+                    width: 100.0,
+                    child: Text(
+                        'SOMETHING',
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.white,
+                      ),
+                    ),
+                ),
+              ],
             ),
             SizedBox(
               height: 10.0,
