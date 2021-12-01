@@ -1,3 +1,4 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,34 +52,41 @@ class ProductScreen extends StatelessWidget {
             SizedBox(
               height: 10.0,
             ),
-            Text(
-                'Categories',
-              style: TextStyle(color: defaultColor),
-            ),
-            Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: [
-                Image(
-                    image: NetworkImage('https://student.valuxapps.com/storage/uploads/categories/16301438353uCFh.29118.jpg'),
-                    height: 100.0,
-                    width: 100.0,
-                    fit: BoxFit.cover,
-                ),
-                Container
-                  (
-                  color: Colors.black.withOpacity(.8),
-                    width: 100.0,
-                    child: Text(
-                        'SOMETHING',
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.white,
-                      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                      'Categories',
+                    style: TextStyle(
+                        color: defaultColor,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                ),
-              ],
+                  ),
+                  Container(
+                    height: 80.0,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                        itemBuilder: (context,index)=>buildCategoryItem(),
+                        separatorBuilder: (context,index)=>SizedBox(
+                          width: 10.0,
+                        ),
+                        itemCount: 10,
+                    ),
+                  ),
+                  Text(
+                    'NEW PRODUCT',
+                    style: TextStyle(
+                      color: defaultColor,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 10.0,
@@ -99,6 +107,32 @@ class ProductScreen extends StatelessWidget {
           ],
         ),
       );
+
+  Widget buildCategoryItem()=>Stack(
+    alignment: AlignmentDirectional.bottomCenter,
+    children: [
+      Image(
+        image: NetworkImage('https://student.valuxapps.com/storage/uploads/categories/16301438353uCFh.29118.jpg'),
+        height: 100.0,
+        width: 100.0,
+        fit: BoxFit.cover,
+      ),
+      Container
+        (
+        color: Colors.black.withOpacity(.8),
+        width: 100.0,
+        child: Text(
+          'SOMETHING',
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ],
+  );
 
   Widget buildGridProduct(ProductModel model) => Container(
         color: Colors.white,
