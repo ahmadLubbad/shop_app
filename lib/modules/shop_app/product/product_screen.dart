@@ -4,6 +4,7 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/model/categories_model.dart';
 import 'package:shop_app/model/home_model.dart';
 import 'package:shop_app/modules/shop_app/cubit/shop_cubit.dart';
 import 'package:shop_app/modules/shop_app/cubit/state.dart';
@@ -16,16 +17,16 @@ class ProductScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).homeModel != null,
+          condition: ShopCubit.get(context).homeModel != null && ShopCubit.get(context).categoriesModel != null,
           builder: (context) =>
-              productBuilder(ShopCubit.get(context).homeModel),
+              productBuilder(ShopCubit.get(context).homeModel,ShopCubit.get(context).categoriesModel),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Widget productBuilder(HomeModel model) => SingleChildScrollView(
+  Widget productBuilder(HomeModel model,CategoriesModel categoriesModel) => SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -66,16 +67,22 @@ class ProductScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
                     height: 80.0,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                        itemBuilder: (context,index)=>buildCategoryItem(),
+                        itemBuilder: (context,index)=>buildCategoryItem(categoriesModel.data.data[index]),
                         separatorBuilder: (context,index)=>SizedBox(
                           width: 10.0,
                         ),
-                        itemCount: 10,
+                        itemCount: categoriesModel.data.data.length,
                     ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
                   ),
                   Text(
                     'NEW PRODUCT',
@@ -108,11 +115,11 @@ class ProductScreen extends StatelessWidget {
         ),
       );
 
-  Widget buildCategoryItem()=>Stack(
+  Widget buildCategoryItem(DataModel model)=>Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
       Image(
-        image: NetworkImage('https://student.valuxapps.com/storage/uploads/categories/16301438353uCFh.29118.jpg'),
+        image: NetworkImage(model.image),
         height: 100.0,
         width: 100.0,
         fit: BoxFit.cover,
@@ -122,7 +129,7 @@ class ProductScreen extends StatelessWidget {
         color: Colors.black.withOpacity(.8),
         width: 100.0,
         child: Text(
-          'SOMETHING',
+          model.name,
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
