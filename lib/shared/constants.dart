@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shop_app/modules/shop_app/login/login_screen.dart';
 import 'package:shop_app/network/local/cache_helper.dart';
 import 'package:shop_app/shared/componentes.dart';
@@ -24,3 +25,17 @@ void printFullText(String text)
 }
 
 String token='';
+
+
+Widget myDivider()=>Padding(
+  padding: const EdgeInsets.all(8.0),
+  child:   Container(
+
+    width: double.infinity,
+
+    height: 1,
+
+    color: Colors.grey[300],
+
+  ),
+);

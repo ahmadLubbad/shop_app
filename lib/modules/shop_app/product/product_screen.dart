@@ -19,14 +19,14 @@ class ProductScreen extends StatelessWidget {
         return ConditionalBuilder(
           condition: ShopCubit.get(context).homeModel != null && ShopCubit.get(context).categoriesModel != null,
           builder: (context) =>
-              productBuilder(ShopCubit.get(context).homeModel,ShopCubit.get(context).categoriesModel),
+              productBuilder(ShopCubit.get(context).homeModel,ShopCubit.get(context).categoriesModel,context),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Widget productBuilder(HomeModel model,CategoriesModel categoriesModel) => SingleChildScrollView(
+  Widget productBuilder(HomeModel model,CategoriesModel categoriesModel,context) => SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -108,7 +108,7 @@ class ProductScreen extends StatelessWidget {
                 crossAxisSpacing: 1.0,
                 childAspectRatio: 1 / 1.6,
                 children: List.generate(model.data.products.length,
-                    (index) => buildGridProduct(model.data.products[index])),
+                    (index) => buildGridProduct(model.data.products[index],context)),
               ),
             ),
           ],
@@ -141,7 +141,7 @@ class ProductScreen extends StatelessWidget {
     ],
   );
 
-  Widget buildGridProduct(ProductModel model) => Container(
+  Widget buildGridProduct(ProductModel model,context) => Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,10 +206,18 @@ class ProductScreen extends StatelessWidget {
                         ),
                       Spacer(),
                       IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.favorite_border,
-                          size: 14.0,
+                        onPressed: ()
+                        {
+                          print(model.id);
+                        },
+                        icon: CircleAvatar(
+                          radius: 15.0,
+                          backgroundColor: ShopCubit.get(context).favorites [model.id] ? defaultColor : Colors.grey ,
+                          child: Icon(
+                            Icons.favorite_border,
+                            size: 14.0,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],

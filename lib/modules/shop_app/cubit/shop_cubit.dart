@@ -12,76 +12,82 @@ import 'package:shop_app/network/end_points.dart';
 import 'package:shop_app/network/remote/dio_helper.dart';
 import 'package:shop_app/shared/constants.dart';
 
-class ShopCubit extends Cubit<ShopStates>
-{
-  ShopCubit():super(ShopInitialState());
+class ShopCubit extends Cubit<ShopStates> {
+  ShopCubit() : super(ShopInitialState());
 
-  static ShopCubit get(context)=>BlocProvider.of(context);
+  static ShopCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
 
-  List<Widget>bottomScreens =[
+  List<Widget> bottomScreens = [
     ProductScreen(),
     CategoriesScreen(),
     FavoriteScreen(),
     SettingScreen(),
   ];
 
-  void changeBottom(int index)
-  {
-    currentIndex=index;
+  void changeBottom(int index) {
+    currentIndex = index;
     emit(ShopChangeBottomNavState());
   }
 
   HomeModel homeModel;
 
-  void getHomeData()
-  {
+  Map<int, bool> favorites = {};
+
+  void getHomeData() {
     emit(ShopLoadingHomeDataState());
 
     DioHelper.getData(
-        url: Home,
+      url: Home,
       token: token,
-    ).then((value)
-    {
+    ).then((value) {
+      homeModel = HomeModel.fromJason(value.data);
 
-      var response = value.data;
-      print(response['data']['banners'][0]['image']);
+      homeModel.data.products.forEach((element) {
+        favorites.addAll({element.id: element.inFavorites});
+      });
 
-      homeModel=HomeModel.fromJason(value.data);
-      printFullText(homeModel.data.banners[0].image);
-      printFullText(homeModel.data.banners.toString());
+      print(favorites.toString());
 
       emit(ShopSuccessHomeDataState());
-    }).catchError((error)
-    {
+    }).catchError((error) {
       print(error);
       emit(ShopErrorHomeDataState());
     });
   }
 
-
-
   CategoriesModel categoriesModel;
 
-  void getCategories()
-  {
+  void getCategories() {
     DioHelper.getData(
       url: GET_CATEGORIES,
       token: token,
-    ).then((value)
-    {
-      categoriesModel=CategoriesModel.fromJason(value.data);
+    ).then((value) {
+      categoriesModel = CategoriesModel.fromJason(value.data);
 
       emit(ShopSuccessCategoriesState());
-    }).catchError((error)
-    {
+    }).catchError((error) {
       print(error);
       emit(ShopErrorCategoriesState());
     });
   }
 
-
-
+  void changeFavorites(int productId) {
+    DioHelper.postData(
+        url: FAVORITES,
+        data: {
+          'product_id': productId
+        },
+      token: token,
+    )
+        .then((value)
+    {
+      emit(ShopSuccessChangeFavoritesState());
+    })
+        .catchError((error)
+    {
+          emit(ShopErrorChangeFavoritesState());
+    });
+  }
 }
-
